@@ -129,6 +129,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+nyc/
 
 # Spyder project settings
 .spyderproject
