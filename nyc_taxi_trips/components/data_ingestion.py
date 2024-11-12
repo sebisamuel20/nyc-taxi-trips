@@ -40,12 +40,8 @@ class DataIngestion:
             nyc_taxi_data = SimpleStorageService()
             dataframe = nyc_taxi_data.read_csv(filename= "2019-01.csv", bucket_name= self.data_ingestion_config.data_bucket_name)
             logging.info(f"Shape of dataframe: {dataframe.shape}")
-            feature_store_file_path  = self.data_ingestion_config.feature_store_file_path
-            dir_path = os.path.dirname(feature_store_file_path)
-            os.makedirs(dir_path,exist_ok=True)
-            # logging.info(f"Saving exported data into feature store file path: {feature_store_file_path}")
-            # dataframe.to_csv(feature_store_file_path,index=False,header=True)
-            # dataframe.to_parquet(feature_store_file_path,index=False)
+            logging.info(f"Dataframe Created from the exported data")
+            
             
             return dataframe
 
@@ -70,12 +66,8 @@ class DataIngestion:
             logging.info(
                 "Exited split_data_as_train_test method of Data_Ingestion class"
             )
-            # dir_path = os.path.dirname(self.data_ingestion_config.training_file_path)
-            # os.makedirs(dir_path,exist_ok=True)
             
             logging.info(f"Exporting train and test file path.")
-            # train_set.to_parquet(self.data_ingestion_config.training_file_path,index=False)
-            # test_set.to_parquet(self.data_ingestion_config.testing_file_path,index=False)
             nyc_taxi_data.write_parquet_to_s3(train_set, self.data_ingestion_config.artifact_bucket_name, self.data_ingestion_config.training_file_key)
             nyc_taxi_data.write_parquet_to_s3(test_set, self.data_ingestion_config.artifact_bucket_name, self.data_ingestion_config.testing_file_key)
 
@@ -110,7 +102,7 @@ class DataIngestion:
             )
 
             data_ingestion_artifact = DataIngestionArtifact(trained_file_key=self.data_ingestion_config.training_file_key,
-            test_file_key=self.data_ingestion_config.testing_file_key)
+            test_file_key=self.data_ingestion_config.testing_file_key, artifact_bucket= self.data_ingestion_config.artifact_bucket_name)
             
             logging.info(f"Data ingestion artifact: {data_ingestion_artifact}")
             return data_ingestion_artifact

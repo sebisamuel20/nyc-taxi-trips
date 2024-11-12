@@ -6,6 +6,7 @@ from dataclasses import dataclass
 class DataIngestionArtifact:
     trained_file_key:str 
     test_file_key:str 
+    artifact_bucket: str
 
 
 
@@ -13,7 +14,7 @@ class DataIngestionArtifact:
 class DataValidationArtifact:
     validation_status:bool
     message: str
-    drift_report_file_path: str
+    # drift_report_file_path: str
 
 
 

@@ -272,7 +272,7 @@ class SimpleStorageService:
         """
         try:
             # Download the parquet file to a local temporary path
-            temp_file_path = '/tmp/temp_parquet_file.parquet'
+            temp_file_path = 'nyc_taxi_trips\cloud_actions\example.parquet'
             self.s3_client.download_file(source_bucket_name, source_file_key, temp_file_path)
             # print(f"Parquet file {source_file_key} downloaded from {source_bucket_name}.")
 

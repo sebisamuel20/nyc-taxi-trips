@@ -1,32 +1,45 @@
 columns:
-  - case_id: category
-  - continent: category
-  - education_of_employee: category
-  - has_job_experience: category
-  - requires_job_training: category
-  - no_of_employees: int
-  - yr_of_estab: int
-  - region_of_employment: category
-  - prevailing_wage: int
-  - unit_of_wage: category
-  - full_time_position: category
-  - case_status: category
+  - vendorid: float
+  - tpep_pickup_datetime: category
+  - tpep_dropoff_datetime: category
+  - passenger_count: float
+  - trip_distance: float
+  - ratecodeid: float
+  - store_and_fwd_flag: category
+  - pulocationid: float
+  - dolocationid: float
+  - payment_type: float
+  - fare_amount: float
+  - extra: float
+  - mta_tax: float
+  - tip_amount: float
+  - tolls_amount: float
+  - improvement_surcharge: float
+  - total_amount: float
+  - congestion_surcharge: float
 
 numerical_columns:
-  - no_of_employees
-  - prevailing_wage
-  - yr_of_estab
+  - vendorid
+  - passenger_count
+  - trip_distance
+  - ratecodeid
+  - pulocationid
+  - dolocationid
+  - payment_type
+  - fare_amount
+  - extra
+  - mta_tax
+  - tip_amount
+  - tolls_amount
+  - improvement_surcharge
+  - total_amount
+  - congestion_surcharge
 
 categorical_columns:
-  - case_id
-  - continent
-  - education_of_employee
-  - has_job_experience
-  - requires_job_training
-  - region_of_employment
-  - unit_of_wage
-  - full_time_position
-  - case_status
+  - tpep_pickup_datetime
+  - tpep_dropoff_datetime
+  - store_and_fwd_flag
+
 
 drop_columns:
   - case_id
