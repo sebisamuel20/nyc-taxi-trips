@@ -287,24 +287,24 @@ class SimpleStorageService:
             raise NycException(e, sys) from e
     
 
-    def write_parquet_to_s3(self, df, target_bucket_name, target_folder_name, target_file_name):
+    def write_parquet_to_s3(self, df, target_bucket_name, target_key):
         """
         Writes a DataFrame to a Parquet file and uploads it to the target S3 bucket in a specified folder.
         """
         try:
             # Define the temporary local path to save the DataFrame as a Parquet file
-            temp_file_path = '/tmp/temp_output_parquet_file.parquet'
+            temp_file_path = 'nyc_taxi_trips\cloud_actions\example.parquet'
 
             # Write the DataFrame to a Parquet file
             df.to_parquet(temp_file_path, engine='pyarrow')
-            print("DataFrame successfully written to a Parquet file.")
+            logging.info("DataFrame successfully written to a Parquet file.")
 
             # Define the target S3 key (folder and file name) for the uploaded file
-            target_key = f"{target_folder_name}/{target_file_name}"
+            # target_key = f"{target_folder_name}/{target_file_name}"
 
             # Upload the Parquet file to the target S3 bucket
             self.s3_client.upload_file(temp_file_path, target_bucket_name, target_key)
-            print(f"Parquet file uploaded to s3://{target_bucket_name}/{target_key}")
+            logging.info(f"Parquet file uploaded to s3://{target_bucket_name}/{target_key}")
 
             # Clean up the temporary file
             os.remove(temp_file_path)

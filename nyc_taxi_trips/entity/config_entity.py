@@ -25,7 +25,11 @@ class DataIngestionConfig:
     testing_file_path: str = os.path.join(data_ingestion_dir, DATA_INGESTION_INGESTED_DIR, TEST_FILE_NAME)
     train_test_split_ratio: float = DATA_INGESTION_TRAIN_TEST_SPLIT_RATIO
     data_bucket_name: str = DATA_BUCKET_NAME
+    training_file: str = TRAIN_FILE_NAME
+    testing_file: str = TEST_FILE_NAME
     artifact_bucket_name: str = ARTIFACT_BUCKET_NAME
+    training_file_key: str = f"{DATA_INGESTION_DIR_NAME}/{DATA_INGESTION_INGESTED_DIR}/{TRAIN_FILE_NAME}"
+    testing_file_key: str = f"{DATA_INGESTION_DIR_NAME}/{DATA_INGESTION_INGESTED_DIR}/{TEST_FILE_NAME}"
 
 
 

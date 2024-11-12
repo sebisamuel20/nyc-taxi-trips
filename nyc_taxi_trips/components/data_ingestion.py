@@ -70,12 +70,14 @@ class DataIngestion:
             logging.info(
                 "Exited split_data_as_train_test method of Data_Ingestion class"
             )
-            dir_path = os.path.dirname(self.data_ingestion_config.training_file_path)
-            os.makedirs(dir_path,exist_ok=True)
+            # dir_path = os.path.dirname(self.data_ingestion_config.training_file_path)
+            # os.makedirs(dir_path,exist_ok=True)
             
             logging.info(f"Exporting train and test file path.")
-            train_set.to_parquet(self.data_ingestion_config.training_file_path,index=False)
-            test_set.to_parquet(self.data_ingestion_config.testing_file_path,index=False)
+            # train_set.to_parquet(self.data_ingestion_config.training_file_path,index=False)
+            # test_set.to_parquet(self.data_ingestion_config.testing_file_path,index=False)
+            nyc_taxi_data.write_parquet_to_s3(train_set, self.data_ingestion_config.artifact_bucket_name, self.data_ingestion_config.training_file_key)
+            nyc_taxi_data.write_parquet_to_s3(test_set, self.data_ingestion_config.artifact_bucket_name, self.data_ingestion_config.testing_file_key)
 
             logging.info(f"Exported train and test file path.")
         except Exception as e:
@@ -107,8 +109,8 @@ class DataIngestion:
                 "Exited initiate_data_ingestion method of Data_Ingestion class"
             )
 
-            data_ingestion_artifact = DataIngestionArtifact(trained_file_path=self.data_ingestion_config.training_file_path,
-            test_file_path=self.data_ingestion_config.testing_file_path)
+            data_ingestion_artifact = DataIngestionArtifact(trained_file_key=self.data_ingestion_config.training_file_key,
+            test_file_key=self.data_ingestion_config.testing_file_key)
             
             logging.info(f"Data ingestion artifact: {data_ingestion_artifact}")
             return data_ingestion_artifact
