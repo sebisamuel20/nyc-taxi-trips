@@ -42,5 +42,36 @@ categorical_columns:
 
 
 drop_columns:
-  - case_id
-  - yr_of_estab
+  - store_and_fwd_flag
+  - tpep_pickup_datetime
+  - tpep_dropoff_datetime
+  - fare_amount
+  - congestion_surcharge
+
+
+# for data transformation
+num_features:
+  - vendorid
+  - passenger_count
+  - trip_distance
+  - ratecodeid
+  - pulocationid
+  - dolocationid
+  - payment_type
+  - extra
+  - mta_tax
+  - tip_amount
+  - tolls_amount
+  - improvement_surcharge
+  - total_amount
+  - duration
+  - pickup_hour
+  - pickup_day
+  - pickup_day_of_week
+  - pickup_month
+  
+
+transform_columns:
+  - passenger_count
+  - trip_distance
+  - payment_type

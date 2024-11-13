@@ -1,5 +1,6 @@
 import boto3
 import pandas as pd
+import numpy as np
 import pyarrow.parquet as pq
 from nyc_taxi_trips.configuration.aws_connect import S3Client
 from io import StringIO
@@ -11,6 +12,7 @@ from nyc_taxi_trips.exception import NycException
 from botocore.exceptions import ClientError
 from pandas import DataFrame,read_csv
 import pickle
+from nyc_taxi_trips.utils.main_utils import save_numpy_array_data, save_object
 
 
 class SimpleStorageService:
@@ -307,6 +309,48 @@ class SimpleStorageService:
             logging.info(f"Parquet file uploaded to s3://{target_bucket_name}/{target_key}")
 
             # Clean up the temporary file
+            os.remove(temp_file_path)
+        except Exception as e:
+            raise NycException(e, sys) from e
+    
+
+    def upload_object_to_folder(self, obj: object, bucket_name, target_key):
+        """
+        Uploads a file to a specified folder in an S3 bucket.
+
+        Parameters:
+        - file_path (str): The path to the file to upload.
+        - bucket_name (str): The name of the target S3 bucket.
+        - folder_name (str): The folder in the S3 bucket where the file should be uploaded.
+        """
+
+        try:
+            temp_file_path = 'nyc_taxi_trips\cloud_actions\example.pkl'
+            save_object(temp_file_path, obj)
+            # Upload the file
+            self.s3_client.upload_file(temp_file_path, bucket_name, target_key)
+            logging.info(f"File {temp_file_path} uploaded to s3://{bucket_name}/{target_key}")
+            os.remove(temp_file_path)
+        except Exception as e:
+            raise NycException(e, sys) from e 
+        
+
+    def upload_array_to_folder(self, array: np.array, bucket_name, target_key):
+        """
+        Uploads a file to a specified folder in an S3 bucket.
+
+        Parameters:
+        - file_path (str): The path to the file to upload.
+        - bucket_name (str): The name of the target S3 bucket.
+        - target_key (str): The folder in the S3 bucket where the file should be uploaded.
+        """
+
+        try:
+            temp_file_path = 'nyc_taxi_trips\cloud_actions\example.npy'
+            save_numpy_array_data(temp_file_path, array)
+            # Upload the file
+            self.s3_client.upload_file(temp_file_path, bucket_name, target_key)
+            logging.info(f"File {temp_file_path} uploaded to s3://{bucket_name}/{target_key}")
             os.remove(temp_file_path)
         except Exception as e:
             raise NycException(e, sys) from e
