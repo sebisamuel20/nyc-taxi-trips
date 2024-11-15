@@ -23,20 +23,22 @@ class DataTransformationArtifact:
     transformed_object_file_key:str 
     transformed_train_file_key:str
     transformed_test_file_key:str
+    artifact_bucket: str
 
 
 @dataclass
-class ClassificationMetricArtifact:
-    f1_score:float
-    precision_score:float
-    recall_score:float
+class RegressionMetricArtifact:
+    r2_score:float
+    rmse:float
+    
 
 
 
 @dataclass
 class ModelTrainerArtifact:
-    trained_model_file_path:str 
-    metric_artifact:ClassificationMetricArtifact
+    trained_model_file_key:str 
+    metric_artifact:RegressionMetricArtifact
+    artifact_bucket: str
 
 
 

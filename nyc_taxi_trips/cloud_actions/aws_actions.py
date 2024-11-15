@@ -12,7 +12,7 @@ from nyc_taxi_trips.exception import NycException
 from botocore.exceptions import ClientError
 from pandas import DataFrame,read_csv
 import pickle
-from nyc_taxi_trips.utils.main_utils import save_numpy_array_data, save_object
+from nyc_taxi_trips.utils.main_utils import save_numpy_array_data, save_object, load_numpy_array_data, load_object
 
 
 class SimpleStorageService:
@@ -352,5 +352,50 @@ class SimpleStorageService:
             self.s3_client.upload_file(temp_file_path, bucket_name, target_key)
             logging.info(f"File {temp_file_path} uploaded to s3://{bucket_name}/{target_key}")
             os.remove(temp_file_path)
+        except Exception as e:
+            raise NycException(e, sys) from e
+    
+
+
+
+    def load_array_from_s3(self, source_bucket_name, source_file_key):
+        """
+        Reads a Parquet file from the source S3 bucket and returns it as a DataFrame.
+        """
+        try:
+            # Download the parquet file to a local temporary path
+            temp_file_path = 'nyc_taxi_trips\cloud_actions\example.npy'
+            self.s3_client.download_file(source_bucket_name, source_file_key, temp_file_path)
+            # print(f"Parquet file {source_file_key} downloaded from {source_bucket_name}.")
+
+            # Read the parquet file into a DataFrame
+            arr = load_numpy_array_data(temp_file_path)
+            # print("Parquet file successfully read into a DataFrame.")
+            
+            # Clean up the temporary file
+            os.remove(temp_file_path)
+            return arr
+        except Exception as e:
+            raise NycException(e, sys) from e
+    
+
+
+    def load_object_from_s3(self, source_bucket_name, source_file_key):
+        """
+        Reads a Parquet file from the source S3 bucket and returns it as a DataFrame.
+        """
+        try:
+            # Download the parquet file to a local temporary path
+            temp_file_path = 'nyc_taxi_trips\cloud_actions\example.pkl'
+            self.s3_client.download_file(source_bucket_name, source_file_key, temp_file_path)
+            # print(f"Parquet file {source_file_key} downloaded from {source_bucket_name}.")
+
+            # Read the parquet file into a DataFrame
+            obj = load_object(temp_file_path)
+            # print("Parquet file successfully read into a DataFrame.")
+            
+            # Clean up the temporary file
+            os.remove(temp_file_path)
+            return obj
         except Exception as e:
             raise NycException(e, sys) from e

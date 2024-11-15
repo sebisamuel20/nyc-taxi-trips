@@ -206,7 +206,8 @@ class DataTransformation:
                 data_transformation_artifact = DataTransformationArtifact(
                     transformed_object_file_key=self.data_transformation_config.transformed_object_file_key,
                     transformed_train_file_key=self.data_transformation_config.transformed_train_file_key,
-                    transformed_test_file_key=self.data_transformation_config.transformed_test_file_key
+                    transformed_test_file_key=self.data_transformation_config.transformed_test_file_key,
+                    artifact_bucket= self.data_ingestion_artifact.artifact_bucket
                 )
                 return data_transformation_artifact
             else:
