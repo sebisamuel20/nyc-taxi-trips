@@ -399,3 +399,17 @@ class SimpleStorageService:
             return obj
         except Exception as e:
             raise NycException(e, sys) from e
+        
+    
+    def load_model_from_s3(self, source_bucket_name, source_file_key):
+        """
+        Reads a Parquet file from the source S3 bucket and returns it as a DataFrame.
+        """
+        try:
+            # Download the parquet file to a local temporary path
+            temp_file_path = 'nyc_taxi_trips\cloud_actions\example.pkl'
+            self.s3_client.download_file(source_bucket_name, source_file_key, temp_file_path)
+            # print(f"Parquet file {source_file_key} downloaded from {source_bucket_name}.")
+            return temp_file_path
+        except Exception as e:
+            raise NycException(e, sys) from e
