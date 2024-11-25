@@ -1,6 +1,9 @@
 import sys
+import os
+from nyc_taxi_trips.constants import DATA_BUCKET_NAME
 from nyc_taxi_trips.exception import NycException
 from nyc_taxi_trips.logger import logging
+from nyc_taxi_trips.cloud_actions.aws_actions import SimpleStorageService
 from nyc_taxi_trips.components.data_ingestion import DataIngestion
 from nyc_taxi_trips.components.data_validation import DataValidation 
 from nyc_taxi_trips.components.data_transformation import DataTransformation
@@ -36,14 +39,14 @@ class TrainPipeline:
         
 
 
-    def start_data_ingestion(self) -> DataIngestionArtifact:
+    def start_data_ingestion(self, filename: str) -> DataIngestionArtifact:
         """
         This method of TrainPipeline class is responsible for starting data ingestion component
         """
         try:
             logging.info("Entered the start_data_ingestion method of TrainPipeline class")
             logging.info("Getting the data from s3 bucket")
-            data_ingestion = DataIngestion(data_ingestion_config=self.data_ingestion_config)
+            data_ingestion = DataIngestion(filename= filename, data_ingestion_config=self.data_ingestion_config)
             data_ingestion_artifact = data_ingestion.initiate_data_ingestion()
             logging.info("Got the train_set and test_set from s3 bucket")
             logging.info(
@@ -146,18 +149,21 @@ class TrainPipeline:
         This method of TrainPipeline class is responsible for running complete pipeline
         """
         try:
-            data_ingestion_artifact = self.start_data_ingestion()
-            data_validation_artifact = self.start_data_validation(data_ingestion_artifact=data_ingestion_artifact)
-            data_transformation_artifact = self.start_data_transformation(
-                data_ingestion_artifact=data_ingestion_artifact, data_validation_artifact=data_validation_artifact)
-            model_trainer_artifact = self.start_model_trainer(data_transformation_artifact=data_transformation_artifact)
-            model_evaluation_artifact = self.start_model_evaluation(data_ingestion_artifact=data_ingestion_artifact,
-                                                                    model_trainer_artifact=model_trainer_artifact)
-            
-            if not model_evaluation_artifact.is_model_accepted:
-                logging.info(f"Model not accepted.")
-                return None
-            model_pusher_artifact = self.start_model_pusher(model_evaluation_artifact=model_evaluation_artifact)
+            data = SimpleStorageService()
+            data_files = data.give_s3_files(bucket_name= DATA_BUCKET_NAME)
+            for f in data_files:
+                data_ingestion_artifact = self.start_data_ingestion(filename= f)
+                data_validation_artifact = self.start_data_validation(data_ingestion_artifact=data_ingestion_artifact)
+                data_transformation_artifact = self.start_data_transformation(
+                    data_ingestion_artifact=data_ingestion_artifact, data_validation_artifact=data_validation_artifact)
+                model_trainer_artifact = self.start_model_trainer(data_transformation_artifact=data_transformation_artifact)
+                model_evaluation_artifact = self.start_model_evaluation(data_ingestion_artifact=data_ingestion_artifact,
+                                                                        model_trainer_artifact=model_trainer_artifact)
+                
+                if not model_evaluation_artifact.is_model_accepted:
+                    logging.info(f"Model not accepted.")
+                    return None
+                model_pusher_artifact = self.start_model_pusher(model_evaluation_artifact=model_evaluation_artifact)
   
 
         except Exception as e:

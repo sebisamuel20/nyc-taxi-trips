@@ -16,12 +16,13 @@ from nyc_taxi_trips.cloud_actions.aws_actions import SimpleStorageService
 
 
 class DataIngestion:
-    def __init__(self,data_ingestion_config:DataIngestionConfig=DataIngestionConfig()):
+    def __init__(self, filename: str, data_ingestion_config:DataIngestionConfig=DataIngestionConfig(),):
         """
         :param data_ingestion_config: configuration for data ingestion
         """
         try:
             self.data_ingestion_config = data_ingestion_config
+            self.filename = filename
         except Exception as e:
             raise NycException(e,sys)
         
@@ -38,7 +39,7 @@ class DataIngestion:
         try:
             logging.info(f"Exporting data from s3 bucket")
             nyc_taxi_data = SimpleStorageService()
-            dataframe = nyc_taxi_data.read_csv(filename= "2019-01.csv", bucket_name= self.data_ingestion_config.data_bucket_name)
+            dataframe = nyc_taxi_data.read_csv(filename= self.filename, bucket_name= self.data_ingestion_config.data_bucket_name)
             logging.info(f"Shape of dataframe: {dataframe.shape}")
             logging.info(f"Dataframe Created from the exported data")
             

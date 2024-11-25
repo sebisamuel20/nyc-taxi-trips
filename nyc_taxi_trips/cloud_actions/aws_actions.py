@@ -32,8 +32,21 @@ class SimpleStorageService:
                 return False
         except Exception as e:
             raise NycException(e,sys)
-        
-        
+
+
+    def give_s3_files(self, bucket_name):
+        try:
+            files = list()
+            response = self.s3_client.list_objects_v2(Bucket=bucket_name, Prefix='')
+            file_keys = [item['Key'] for item in response.get('Contents', []) if item['Key'].endswith('.csv')]
+            for file_key in file_keys:
+                files.append(os.path.basename(file_key))
+                logging.info(f"{file_key} has been pushed to the files list")
+            
+            return files
+        except Exception as e:
+            raise NycException(e,sys)
+   
 
     @staticmethod
     def read_object(object_name: str, decode: bool = True, make_readable: bool = False) -> Union[StringIO, str] : 

@@ -74,9 +74,9 @@ class NycData:
 
     def get_nyc_data_as_dict(self):
         """
-        This function returns a dictionary from USvisaData class input 
+        This function returns a dictionary from NycData class input 
         """
-        logging.info("Entered get_usvisa_data_as_dict method as USvisaData class")
+        logging.info("Entered get_nyc_data_as_dict method as NycData class")
 
         try:
             input_data = {
@@ -126,7 +126,7 @@ class NycClassifier:
         Returns: Prediction in string format
         """
         try:
-            logging.info("Entered predict method of USvisaClassifier class")
+            logging.info("Entered predict method of NycClassifier class")
             model = NycEstimator(
                 bucket_name=self.prediction_pipeline_config.model_bucket_name,
                 model_path=self.prediction_pipeline_config.model_file_path,
