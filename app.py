@@ -125,10 +125,7 @@ async def predictRouteClient(request: Request):
         value = model_predictor.predict(dataframe=nyc_df)[0]
 
         status = f"The fare for this trip is {value}"
-        # if value == 1:
-        #     status = "Visa-approved"
-        # else:
-        #     status = "Visa Not-Approved"
+    
 
         return templates.TemplateResponse(
             "nyc.html",
