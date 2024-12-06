@@ -11,8 +11,8 @@ from uvicorn import run as app_run
 from typing import Optional
 
 from nyc_taxi_trips.constants import APP_HOST, APP_PORT
-from nyc_taxi_trips.pipline.prediction_pipeline import NycData, NycClassifier
-from nyc_taxi_trips.pipline.training_pipeline import TrainPipeline
+from nyc_taxi_trips.pipeline.prediction_pipeline import NycData, NycClassifier
+from nyc_taxi_trips.pipeline.training_pipeline import TrainPipeline
 
 app = FastAPI()
 
