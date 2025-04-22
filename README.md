@@ -9,6 +9,7 @@ The following project is to predict the fare of the cabs in the NYC region. Sinc
 - Flowchart: https://whimsical.com/
 - MLOPs Tool: https://www.evidentlyai.com/
 - Data link: https://www.kaggle.com/datasets/dhruvildave/new-york-city-taxi-trips-2019
+- Exploratory Data Analysis and Model Training Experiment: https://github.com/sebisamuel20/nyc-taxi-trips/blob/main/notebook/EDA.ipynb
 
 
 ## Git commands
