@@ -1,49 +1,60 @@
-# NYC Taxi Cab Fare Predictor
+# NYC Cab Fare Predictor
 
 
-## Workflows
-
-1. Update config.yaml
-2. Update schema.yaml
-3. Update params.yaml
-4. Update the entity
-5. Update the configuration manager in src config
-6. Update the components
-7. Update the pipeline 
-8. Update the main.py
-9. Update the app.py
+- Anaconda: https://www.anaconda.com/
+- Vs code: https://code.visualstudio.com/download
+- Git: https://git-scm.com/
+- Flowchart: https://whimsical.com/
+- MLOPs Tool: https://www.evidentlyai.com/
+- MongoDB: https://account.mongodb.com/account/login
+- Data link: https://www.kaggle.com/datasets/dhruvildave/new-york-city-taxi-trips-2019
 
 
-
-# How to run?
-### STEPS:
-
-Clone the repository
+## Git commands
 
 ```bash
-https://github.com/sebisamuel20/nyc-taxi-trips
-```
-### STEP 01- Create a conda environment after opening the repository
+git add .
 
-```bash
-conda create -n mlproj python=3.8 -y
-```
+git commit -m "Updated"
 
-```bash
-conda activate mlproj
+git push origin main
 ```
 
 
-### STEP 02- install the requirements
+## How to run?
+
+```bash
+conda create -n visa python=3.8 -y
+```
+
+```bash
+conda activate env_name
+```
+
 ```bash
 pip install -r requirements.txt
 ```
 
+## Workflow:
 
+1. constants
+2. entity
+3. components
+4. pipeline
+5. Main file
+
+
+
+### Export the  environment variable
 ```bash
-python app.py
-```
 
+
+export AWS_ACCESS_KEY_ID=<AWS_ACCESS_KEY_ID>
+
+export AWS_SECRET_ACCESS_KEY=<AWS_SECRET_ACCESS_KEY>
+
+
+```
 
 
 # AWS-CICD-Deployment-with-Github-Actions
@@ -79,7 +90,7 @@ python app.py
 
 	
 ## 3. Create ECR repo to store/save docker image
-    - Save the URI: of the ECR Repository
+    - Save the URI
 
 	
 ## 4. Create EC2 machine (Ubuntu) 
@@ -109,12 +120,11 @@ python app.py
 
 # 7. Setup github secrets:
 
-    AWS_ACCESS_KEY_ID=
+   - AWS_ACCESS_KEY_ID
+   - AWS_SECRET_ACCESS_KEY
+   - AWS_DEFAULT_REGION
+   - ECR_REPO
 
-    AWS_SECRET_ACCESS_KEY=
+    
 
-    AWS_REGION = us-east-1
 
-    AWS_ECR_LOGIN_URI 
-
-    ECR_REPOSITORY_NAME 
