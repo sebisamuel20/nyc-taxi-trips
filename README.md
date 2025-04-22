@@ -1,5 +1,7 @@
 # NYC Cab Fare Predictor
 
+The following project is to predict the fare of the cabs in the NYC region. Since the used data is around 11GB trained on a system of 8GB, this project uses 'Out-of-core' Machine Learning to be able to train with huge amounts on data which is greater than a system's own memory.
+
 
 - Anaconda: https://www.anaconda.com/
 - Vs code: https://code.visualstudio.com/download
